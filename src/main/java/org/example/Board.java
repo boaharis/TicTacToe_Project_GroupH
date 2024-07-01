@@ -1,8 +1,8 @@
-// src/main/java/org/example/Board.java
 package org.example;
 
+
 public class Board {
-    private char[][] cells;
+    public char[][] cells;
 
     public Board() {
         cells = new char[3][3];
@@ -14,9 +14,23 @@ public class Board {
     }
 
     public void place(int x, int y, char marker) {
+        if (x < 0 || x > 2 || y < 0 || y > 2) {
+            throw new IllegalArgumentException("Coordinates must be between 0 and 2");
+        }
         if (isCellEmpty(x, y)) {
             cells[x][y] = marker;
         }
+    }
+
+    public boolean isFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (cells[i][j] == ' ') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void clear() {
@@ -30,11 +44,9 @@ public class Board {
     public void print() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(cells[i][j]);
-                if (j < 2) System.out.print("|");
+                System.out.print(cells[i][j] + " ");
             }
             System.out.println();
-            if (i < 2) System.out.println("-----");
         }
     }
 }
